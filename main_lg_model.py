@@ -21,7 +21,7 @@ from sklearn.metrics import classification_report,accuracy_score
 import pickle
 
 
-df=pd.read_excel(r'C:/Users/dell/Downloads/Simulation_data.xlsx',engine='openpyxl')
+df=pd.read_excel(r'simulation_data_hatch_back.xlsx',engine='openpyxl')
 
 
 def transform_dataframe(df):
@@ -54,21 +54,34 @@ def transform_dataframe(df):
     df['eve']=np.where(df['date'].isin(eve_parsed),'eve','')
     
     return df
+
+df=transform_dataframe(df)
+df['slots_occupied']=df['slots_occupied'].fillna(0)
 train_df=df.copy()
-train_df=train_df[['hour_min','day_of_week','parking_availability']]
+train_df=train_df[['hour_min','day_of_week','parking_availability','slots_occupied']]
+
 numeric_transformer=Pipeline(steps=[("scaler",StandardScaler())])
 categorical_transformer=OneHotEncoder(handle_unknown='ignore')
-preprocessor=ColumnTransformer(transformers=[("num",numeric_transformer,["hour_min"]),("cat",categorical_transformer,["day_of_week"])])
+preprocessor=ColumnTransformer(transformers=[("num",numeric_transformer,["hour_min","slots_occupied"]),("cat",categorical_transformer,["day_of_week"])])
 clf=Pipeline(steps=[("preprocessor",preprocessor),("classifier",LogisticRegression())])
-X=train_df.drop(columns='parking_availability')
+
+X=train_df.drop(columns='parking_availability',axis=1)
 y=train_df['parking_availability']
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
 clf.fit(X_train,y_train)
+
+
+
 y_pred=clf.predict(X_test)
 print(classification_report(y_test,y_pred))
 acc = accuracy_score(y_test, y_pred)
-
 print(acc)
+
+random_data={'hour_min':'09.45','day_of_week':'Tue'}
+slots_occupied_t=df['day_of_week'=='Tue']
+random_data_df=pd.DataFrame([random_data])
+y_pred=clf.predict(random_data_df)
+
 
 
 file_name=r'model\hatch_back.sav'

@@ -1,0 +1,48 @@
+date,day,holiday,holiday_type
+01-01-2023,Monday,New Year's Day (R),Restricted
+14-01-2023,Sunday,Makar Sankranti (R),Restricted
+22-01-2023,Monday,Basant Panchami / Sri Panchami (R),Restricted
+26-01-2023,Friday,Republic Day (G),Gazetted
+31-01-2023,Wednesday,Guru Ravidas's Birthday (R),Restricted
+10-02-2023,Saturday,Swami Dayananda Saraswati Jayanti (R),Restricted
+14-02-2023,Wednesday,Maha Shivaratri (G),Gazetted
+19-02-2023,Monday,Shivaji Jayanti (R),Restricted
+01-03-2023,Thursday,Holika Dahan/Dolyatra (R),Restricted
+02-03-2023,Friday,Holi (G),Gazetted
+18-03-2023,Sunday,Chaitra Sukladi/Gudi Padava/Ugadi/Cheti Chand (R),Restricted
+25-03-2023,Sunday,Ram Navami (R),Restricted
+29-03-2023,Thursday,Mahavir Jayanti (G),Gazetted
+30-03-2023,Friday,Good Friday (G),Gazetted
+01-04-2023,Sunday,Easter Sunday (R),Restricted
+14-04-2023,Saturday,Vaisakhi/Vishu/Mesadi (R),Restricted
+15-04-2023,Sunday,Vaisakhadi(Bengal)/Bahag Bihu (Assam) (R),Restricted
+30-04-2023,Monday,Buddha Purnima (G),Gazetted
+09-05-2023,Wednesday,Guru Rabindranath's Birthday (R),Restricted
+15-06-2023,Friday,Jamat-Ul-Vida (R),Restricted
+16-06-2023,Saturday,Idu'l Fitr (G),Gazetted
+14-07-2023,Saturday,Rath Yatra (R),Restricted
+15-08-2023,Wednesday,Independence day (G),Gazetted
+17-08-2023,Friday,Parsi New Year's day/Nauraj (R),Restricted
+22-08-2023,Wednesday,Id-ul-Zuha (Bakrid) (G),Gazetted
+25-08-2023,Saturday,Onam or Thiru Onam Day (R),Restricted
+26-08-2023,Sunday,Raksha Bandhan (R),Restricted
+03-09-2023,Monday,Janmashtami (G),Gazetted
+13-09-2023,Thursday,Vinayaka Chaturthi/Ganesh Chaturthi (R),Restricted
+21-09-2023,Friday,Muharram (G),Gazetted
+02-10-2023,Tuesday,Mahatma Gandhi's Birthday (G),Gazetted
+16-10-2023,Tuesday,Dussehra (Maha Saptami) (Additional) (R),Restricted
+17-10-2023,Wednesday,Dussehra (Maha Ashtami) (Additional) (R),Restricted
+18-10-2023,Thursday,Dussehra (Maha Navmi) (R),Restricted
+19-10-2023,Friday,Dussehra (G),Gazetted
+24-10-2023,Wednesday,Maharishi Valmiki's Birthday (R),Restricted
+27-10-2023,Saturday,Karaka Chaturthi (Karva Chouth) (R),Restricted
+06-11-2023,Tuesday,Deepavali (South India) (R),Restricted
+07-11-2023,Wednesday,Diwali (Deepavali) (G),Gazetted
+08-11-2023,Thursday,Govardhan Puja (R),Restricted
+09-11-2023,Friday,Bhai Duj (R),Restricted
+13-11-2023,Tuesday,Pratihar Sashthi or Surya Sashthi (Chhat Puja) (R),Restricted
+21-11-2023,Wednesday,Milad-un-Nabi or Id-e-Milad (Birthday of Prophet Mohammad) (G),Gazetted
+23-11-2023,Friday,Gur'u Nanak's Birthday (G),Gazetted
+24-11-2023,Saturday,Guru Teg Bahadur's Martyrdom Day (R),Restricted
+24-12-2023,Monday,Christmas Eve (R),Restricted
+25-12-2023,Tuesday,Christmas Day (G),Gazetted

@@ -56,6 +56,7 @@ def transform_dataframe(df):
     return df
 
 df=transform_dataframe(df)
+df.to_excel(r'processed_suvs_data.xlsx',index=False)
 df['slots_occupied']=df['slots_occupied'].fillna(0)
 train_df=df.copy()
 train_df=train_df[['hour_min','day_of_week','parking_availability','slots_occupied']]
@@ -77,13 +78,13 @@ print(classification_report(y_test,y_pred))
 acc = accuracy_score(y_test, y_pred)
 print(acc)
 
-random_data={'hour_min':'09.45','day_of_week':'Tue'}
-slots_occupied_t=df['day_of_week'=='Tue']
-random_data_df=pd.DataFrame([random_data])
-y_pred=clf.predict(random_data_df)
+# random_data={'hour_min':'09.45','day_of_week':'Tue','slots_occupied':'200'}
+# slots_occupied_t=df['day_of_week'=='Tue']
+# random_data_df=pd.DataFrame([random_data])
+# y_pred=clf.predict(random_data_df)
 
 
 
-file_name=r'model\hatch_back.sav'
+file_name=r'model\suvs.sav'
 
 pickle.dump(clf,open(file_name,'wb'))

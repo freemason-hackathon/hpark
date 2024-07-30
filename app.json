@@ -20,7 +20,17 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.freemason.hpark"
+      "package": "com.freemason.hpark",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyABpjcT06UusX2fFFceFahjDlQ1PAhc8mk"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
@@ -28,6 +38,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "expo-location",
       "expo-router"
     ],
     "experiments": {

@@ -1,34 +1,42 @@
 import { useEffect, useState, useRef } from 'react';
 import { PermissionsAndroid, StyleSheet, View, Text, Pressable, Image } from 'react-native';
-import MapView,  { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView,  { PROVIDER_GOOGLE, Marker,  } from 'react-native-maps';
+import MavViewDirections from 'react-native-maps-directions'
 
 import * as Location from 'expo-location';
 
 export default function HomeScreen() {
   const [parkingType, setParkingType] = useState('Office');
-  const [parkingProbability, setParkingProbability] = useState('0')
-  const [suvCount, setSuvCount] = useState('0')
-  const [hatchbackCount, sethatchbackCount] = useState('0')
+  const [parkingProbability, setParkingProbability] = useState(90)
+  const [suvCount, setSuvCount] = useState(114)
+  const [hatchbackCount, sethatchbackCount] = useState(246)
 
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
-  const MINUTE_MS = 6000;
+  const [latitudeDelta, setLatitudeDelta] = useState(0.012);
+  const [longitudeDelta, setLongitudeDelta] = useState(0.012);
+  
+  const origin = { latitude: 18.5541, longitude: 73.9282 };
+  const destination = { latitude: 37.423199, longitude: -122.084068 };
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyABpjcT06UusX2fFFceFahjDlQ1PAhc8mk';
+
+  const MINUTE_MS = 15000;
 
   const gmapRef = useRef<MapView>(null);
 
   const [coord, setCoord] = useState({
     latitude: 18.551860,
     longitude: 73.889878,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: 0.012,
+    longitudeDelta: 0.012,
   });
 
   const [businessBayCords, setBusinessBayCords] = useState({
     latitude: 18.551860,
     longitude: 73.889878,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421
+    latitudeDelta: 0.012,
+    longitudeDelta: 0.012
   })
 
   const getLocation = async () => {
@@ -49,22 +57,21 @@ export default function HomeScreen() {
   }
 
   const moveToLocation = async (latitude: any, longitude: any) => {
-    console.log("latitue", latitude)
-    console.log("longitude", longitude)
+    let zoomSwitch = Math.random() < 0.5;
 
     gmapRef.current?.animateToRegion(
       {
         latitude: 18.5541,
         longitude: 73.9282,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitudeDelta: zoomSwitch ? 0.012 : 0.1,
+        longitudeDelta: zoomSwitch ? 0.012 : 0.1,
       },
-      2000,
+      5000,
     );
   };
 
   const firstCall = async () => {
-    let cords = await getLocation();
+      let cords = await getLocation();
       moveToLocation(cords?.latitude, cords?.longitude);
   }
 
@@ -76,6 +83,12 @@ export default function HomeScreen() {
       let cords = await getLocation();
       moveToLocation(cords?.latitude, cords?.longitude);
     }, MINUTE_MS);
+
+    const statsChangeMock = setInterval(() => {
+      setParkingProbability(parkingProbability => parkingProbability - 1);
+      setSuvCount(suvCount => suvCount - 2);
+      sethatchbackCount(hatchbackCount => hatchbackCount - 3);
+    }, 10000);
   }, []);
 
   const onParkingButtonClick = () => {
@@ -96,10 +109,42 @@ export default function HomeScreen() {
       // header for any logo
       }
       <View style={[styles.logoContainer]} >
-        <Image
-          style={styles.logo}
-          source={require('@/assets/images/hpark.jpg')}
-        />
+        <View style={[styles.logoContainerLeft]}>
+          <Image
+            style={styles.logo}
+            source={require('@/assets/images/hpark.png')}
+          />
+        </View>
+        <View style={[styles.logoContainerRight]}>
+            <View style={{
+              justifyContent: 'center',
+              marginRight: 10,
+            }}>
+                <Text style={[styles.goodMorningLabel]}>Good Morning</Text>
+                <Text style={[styles.usernameLabel]}>Nitish Kumar</Text>
+            </View>
+            <View style={{
+              justifyContent: 'center',
+              width: 30,
+            }}>
+              <Image
+                style={styles.userIcon}
+                source={require('@/assets/images/userIcon.png')}
+              />
+            </View>
+        </View>
+      </View>
+      <View style={{
+          height: 50,
+          width: '100%',
+          backgroundColor: 'grey',
+          alignItems: 'center'
+        }}>
+          <Text style={{
+            color: 'white',
+            fontSize: 25,
+            fontWeight: 'bold',
+          }}>Find the best place to park</Text>
       </View>
 
       {
@@ -134,7 +179,15 @@ export default function HomeScreen() {
           initialRegion={coord}
           ref={gmapRef}
           >
-          <Marker coordinate={businessBayCords}/>
+          <Marker coordinate={businessBayCords} identifier='destination' />
+          {/* <Marker coordinate={origin} identifier='origin' /> */}
+          <MavViewDirections 
+            origin={origin}
+            destination={businessBayCords}
+            apikey='AIzaSyABpjcT06UusX2fFFceFahjDlQ1PAhc8mk'
+            strokeWidth={3}
+            strokeColor='blue'
+          />
         </MapView>
         
       </View>
@@ -156,14 +209,37 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   logoContainer: {
-    flex: 1,
+    height: 130,
     backgroundColor: 'grey',
     marginTop: '5%',
     padding: 10,
+    flexDirection: 'row'
+  },
+  logoContainerLeft: {
     justifyContent: 'center',
+    width: 200
+  },
+  logoContainerRight: {
+    width: '250%',
+    flexDirection: 'row',
+    marginLeft: 50
+  },
+  userIcon: {
+    height: 40,
+    width: 40,
+  },
+  goodMorningLabel: {
+    textAlign: 'right',
+    color: 'white',
+    fontSize: 18,
+  },
+  usernameLabel: {
+    textAlign: 'right',
+    color: 'white',
+    fontSize: 18,
   },
   parkingCountContainer: {
-    height: 200
+    height: 150
   },
   suvContainer: {
     flex: 1,
@@ -207,8 +283,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   parkingProbabilityContainer: {
-    flex: 1,
-    alignItems: 'center'
+    height: 100,
+    alignItems: 'center',
+    paddingTop: 10
   },
   parkingProbabilityText: {
     textAlign: 'center',
@@ -224,14 +301,16 @@ const styles = StyleSheet.create({
     width: 200,
   },
   mapContainer: {
-    height: 200
+    height: 300,
+    padding: 10
   },
   map: {
     width: '100%',
     height: '100%',
   },
   logo: {
-    width: 80,
-    height: 60,
+    width: 50,
+    height: 100,
+    marginLeft: 20
   },
 });

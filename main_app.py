@@ -75,7 +75,7 @@ def predict_parking_availability():
         weather_agg_per=weather_latest_eval[weather_latest_eval['weather']==current_weather['Weather']]
         weather_agg_per=weather_agg_per.to_dict(orient='records')[0]['weight']
         
-        prob_per=((int(probability)+int(weather_agg_per)/2))
+        prob_per=((int(probability)+int(weather_agg_per))/2)
         
         response_json={"availableSlots":resp.json()['availableSlots'],
                        "carParkingAvailable":o_pred,

@@ -50,6 +50,12 @@ def predict_parking_availability():
         model_data_df=pd.DataFrame([model_data])
         o_pred=myModel.predict(model_data_df)        
         o_pred=list(o_pred)[0]
+        print('Adding initial logs')
+        
+        
+        
+        
+        
         
         response_json={"availableSlots":resp.json()['availableSlots'],"CarParkingAvailable":o_pred,"totalSlots":resp.json()['totalSlots'],"carType":Ctype}
         return jsonify(response_json),200

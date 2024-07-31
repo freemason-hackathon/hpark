@@ -13,9 +13,11 @@ from datetime import datetime , timedelta
 import requests
 import pickle
 import pandas as pd
+import logging
 
+log = logging.getLogger(__name__)
 
-
+logging.basicConfig(filename=r'logs/hpark_py_app.log', level=logging.INFO)
 app = Flask(__name__)
 
 @app.route('/api/get-parking-data',methods=['POST'])
@@ -26,6 +28,8 @@ def predict_parking_availability():
         ipdata=request.get_json()
         date=ipdata['dateTime']
         Ctype=ipdata['carType']
+        log.info(" Input Data Recieved : {} {}".format(date,Ctype))
+        
         url='http://35.207.226.222:8080/getParkingData'
         # 35.200.146.127
 
@@ -34,10 +38,12 @@ def predict_parking_availability():
         
         if Ctype == 'HatchBack':
             fname=r'model/hatch_back.sav'
+            log.info('Hatchback Model Loaded in memory')
             with open(fname,'rb') as f:
                 myModel = pickle.load(f)
         if Ctype=='suv':
             fname=r'model/suvs.sav'
+            log.info('SUV Model Loaded in Memory')
             with open(fname,'rb') as f:
                 myModel = pickle.load(f)
         
@@ -48,23 +54,40 @@ def predict_parking_availability():
         dayname=dateObj.strftime('%a')
         model_data={'hour_min':hour_min,'day_of_week':dayname,'slots_occupied':resp.json()['availableSlots']}
         model_data_df=pd.DataFrame([model_data])
+        log.info('Initailaizing Prediction')
         o_pred=myModel.predict(model_data_df)        
         o_pred=list(o_pred)[0]
-        print('Adding initial logs')
-        
-        weather_df=pd.read_excel('weather_data_pune.xlsx')
-        weather_latest_eval=pd.read_excel('weather_evaluation.xlsx')
-        
+        log.info('Adding initial logs')
+        current_datetime=datetime.now()
+        current_datetime=current_datetime.strftime(format='%d-%b')
         
         
         
-        response_json={"availableSlots":resp.json()['availableSlots'],"carParkingAvailable":o_pred,"totalSlots":resp.json()['totalSlots'],"carType":Ctype}
+        weather_df=pd.read_excel('weather_data_pune.xlsx',engine='openpyxl')
+        weather_latest_eval=pd.read_excel('weather_evaluation.xlsx',engine='openpyxl')
+        
+        current_weather=weather_df[weather_df['Date']==current_datetime]
+        current_weather=current_weather.to_dict(orient='records')[0]
+        
+        
+        
+        
+        response_json={"availableSlots":resp.json()['availableSlots'],
+                       "carParkingAvailable":o_pred,
+                       "totalSlots":resp.json()['totalSlots'],
+                       "carType":Ctype,
+                       'maxTemp':current_weather['Max Temp'],
+                       'minTemp':current_weather['Min Temp'],
+                       'weatherCondition':current_weather['Weather'],
+                       'parkingProbPercentage':'80.12'}
+        
+        
         return jsonify(response_json),200
         
         
     except Exception as e:
         return jsonify({"error":str(e)})
-        print(str(e))
+        log.info(str(e))
 
 
 

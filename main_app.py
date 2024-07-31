@@ -49,7 +49,10 @@ def predict_parking_availability():
         model_data={'hour_min':hour_min,'day_of_week':dayname,'slots_occupied':resp.json()['availableSlots']}
         model_data_df=pd.DataFrame([model_data])
         o_pred=myModel.predict(model_data_df)        
+        o_pred=list(o_pred)[0]
         
+        response_json={"availableSlots":resp.json()['availableSlots'],"CarParkingAvailable":o_pred,"totalSlots":resp.json()['totalSlots'],"carType":Ctype}
+        return response_json
         
         
     except Exception as e:

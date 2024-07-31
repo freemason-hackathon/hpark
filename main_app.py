@@ -31,7 +31,7 @@ def predict_parking_availability():
         ipdata=request.get_json()
         date=ipdata['dateTime']
         Ctype=ipdata['carType']
-        probability=int(float(ipdata['percentage'])*100)
+        
         log.info(" Input Data Recieved : {} {}".format(date,Ctype))
         url='http://35.207.226.222:8080/getParkingData'
         # 35.200.146.127
@@ -74,7 +74,7 @@ def predict_parking_availability():
         
         weather_agg_per=weather_latest_eval[weather_latest_eval['weather']==current_weather['Weather']]
         weather_agg_per=weather_agg_per.to_dict(orient='records')[0]['weight']
-        
+        probability=int(float(resp.json()['availablePercent'])*100)
         prob_per=((int(probability)+int(weather_agg_per))/2)
         
         response_json={"availableSlots":resp.json()['availableSlots'],

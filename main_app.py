@@ -12,6 +12,7 @@ from pytz import timezone
 from datetime import datetime , timedelta
 import requests
 import pickle
+import pandas as pd
 
 
 
@@ -23,21 +24,31 @@ def predict_parking_availability():
     # if request.method =='POST':
     try:
         ipdata=request.get_json()
-        date=ipdata['date']
-        Ctype=ipdata['type']
-        url='http://35.200.146.127:8080/getParkingData'
+        date=ipdata['dateTime']
+        Ctype=ipdata['carType']
+        url='http://35.207.226.222:8080/getParkingData'
         # 35.200.146.127
 
-        x={"dateTime":"01-01-2024 08:02:00","carType":"HatchBack"}
+        x={"dateTime":date,"carType":Ctype}
         resp=requests.post(url,json=x)
         
         if Ctype == 'HatchBack':
-            myModel = pickle.loads(r'model/hatch_back.sav')
+            fname=r'model/hatch_back.sav'
+            with open(fname,'rb') as f:
+                myModel = pickle.load(f)
         if Ctype=='SUV':
-            myModel=pickle.loads(r'model/suvs.sav')
+            fname=r'model/suvs.sav'
+            with open(fname,'rb') as f:
+                myModel = pickle.load(f)
         
-        # 'hour_min'=round(date.split()+(df['minute']/60),1)
-        
+        dateList=date.split(' ')[1].split(':')[:2]
+        hour_min='.'.join(dateList)
+        # date="01-01-2024 08:02:00"
+        dateObj=datetime.strptime(date, '%d-%m-%Y %H:%M:%S')
+        dayname=dateObj.strftime('%a')
+        model_data={'hour_min':hour_min,'day_of_week':dayname,'slots_occupied':resp.json()['availableSlots']}
+        model_data_df=pd.DataFrame([model_data])
+        o_pred=myModel.predict(model_data_df)        
         
         
         
@@ -47,4 +58,4 @@ def predict_parking_availability():
 
 
 if __name__=='__main__':
-    app.run(host='0.0.0.0',port=8080,threaded=True,debug=True)
+    app.run(host='0.0.0.0',port=8081,threaded=True,debug=True)

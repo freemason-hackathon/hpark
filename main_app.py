@@ -36,7 +36,7 @@ def predict_parking_availability():
             fname=r'model/hatch_back.sav'
             with open(fname,'rb') as f:
                 myModel = pickle.load(f)
-        if Ctype=='SUV':
+        if Ctype=='suv':
             fname=r'model/suvs.sav'
             with open(fname,'rb') as f:
                 myModel = pickle.load(f)

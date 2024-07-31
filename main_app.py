@@ -14,6 +14,9 @@ import requests
 import pickle
 import pandas as pd
 import logging
+import pdb
+
+
 
 log = logging.getLogger(__name__)
 
@@ -28,8 +31,8 @@ def predict_parking_availability():
         ipdata=request.get_json()
         date=ipdata['dateTime']
         Ctype=ipdata['carType']
+        probability=ipdata['percentage']
         log.info(" Input Data Recieved : {} {}".format(date,Ctype))
-        
         url='http://35.207.226.222:8080/getParkingData'
         # 35.200.146.127
 
@@ -69,8 +72,10 @@ def predict_parking_availability():
         current_weather=weather_df[weather_df['Date']==current_datetime]
         current_weather=current_weather.to_dict(orient='records')[0]
         
+        weather_agg_per=weather_latest_eval[weather_latest_eval['weather']==current_weather['Weather']]
+        weather_agg_per=weather_agg_per.to_dict(orient='records')[0]['weight']
         
-        
+        prob_per=((int(probability)+int(weather_agg_per)/2))
         
         response_json={"availableSlots":resp.json()['availableSlots'],
                        "carParkingAvailable":o_pred,
@@ -79,7 +84,7 @@ def predict_parking_availability():
                        'maxTemp':current_weather['Max Temp'],
                        'minTemp':current_weather['Min Temp'],
                        'weatherCondition':current_weather['Weather'],
-                       'parkingProbPercentage':'80.12'}
+                       'parkingProbPercentage':prob_per}
         
         
         return jsonify(response_json),200

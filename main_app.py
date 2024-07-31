@@ -52,7 +52,8 @@ def predict_parking_availability():
         o_pred=list(o_pred)[0]
         print('Adding initial logs')
         
-        
+        weather_df=pd.read_excel('weather_data_pune.xlsx')
+        weather_latest_eval=pd.read_excel('weather_evaluation.xlsx')
         
         
         

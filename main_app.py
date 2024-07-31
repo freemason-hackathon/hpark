@@ -56,6 +56,7 @@ def predict_parking_availability():
         
         
     except Exception as e:
+        return jsonify({"error":str(e)})
         print(str(e))
 
 

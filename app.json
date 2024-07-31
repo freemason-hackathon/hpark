@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.freemason.hpark"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,13 +25,16 @@
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_BACKGROUND_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyABpjcT06UusX2fFFceFahjDlQ1PAhc8mk"
         }
-      }
+      },
+      "googleServicesFile": "./app/google-services.json"
     },
     "web": {
       "bundler": "metro",

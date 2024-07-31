@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "552418163896",
+    "project_id": "freemason-hackathon",
+    "storage_bucket": "freemason-hackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552418163896:android:171c1b7a5587e7cd75c84d",
+        "android_client_info": {
+          "package_name": "com.freemason.hpark"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD46w2eAK4YGpsAdRYinOzYs6Os35SBvB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -31,7 +31,7 @@ def predict_parking_availability():
         ipdata=request.get_json()
         date=ipdata['dateTime']
         Ctype=ipdata['carType']
-        probability=ipdata['percentage']
+        probability=int(float(ipdata['percentage'])*100)
         log.info(" Input Data Recieved : {} {}".format(date,Ctype))
         url='http://35.207.226.222:8080/getParkingData'
         # 35.200.146.127

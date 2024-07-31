@@ -57,7 +57,7 @@ def predict_parking_availability():
         
         
         
-        response_json={"availableSlots":resp.json()['availableSlots'],"CarParkingAvailable":o_pred,"totalSlots":resp.json()['totalSlots'],"carType":Ctype}
+        response_json={"availableSlots":resp.json()['availableSlots'],"carParkingAvailable":o_pred,"totalSlots":resp.json()['totalSlots'],"carType":Ctype}
         return jsonify(response_json),200
         
         

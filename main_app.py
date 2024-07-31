@@ -52,7 +52,7 @@ def predict_parking_availability():
         o_pred=list(o_pred)[0]
         
         response_json={"availableSlots":resp.json()['availableSlots'],"CarParkingAvailable":o_pred,"totalSlots":resp.json()['totalSlots'],"carType":Ctype}
-        return response_json
+        return jsonify(response_json),200
         
         
     except Exception as e:

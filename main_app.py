@@ -33,7 +33,7 @@ def predict_parking_availability():
         Ctype=ipdata['carType']
         
         log.info(" Input Data Recieved : {} {}".format(date,Ctype))
-        url='localhost:8080/getParkingData'
+        url='http://34.93.157.250:8080/getParkingData'
         # 35.200.146.127
 
         x={"dateTime":date,"carType":Ctype}

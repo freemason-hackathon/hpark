@@ -33,7 +33,7 @@ def predict_parking_availability():
         Ctype=ipdata['carType']
         
         log.info(" Input Data Recieved : {} {}".format(date,Ctype))
-        url='http://35.207.226.222:8080/getParkingData'
+        url='localhost:8080/getParkingData'
         # 35.200.146.127
 
         x={"dateTime":date,"carType":Ctype}
@@ -63,8 +63,6 @@ def predict_parking_availability():
         log.info('Adding initial logs')
         current_datetime=datetime.now()
         current_datetime=current_datetime.strftime(format='%d-%b')
-        
-        
         
         weather_df=pd.read_excel('weather_data_pune.xlsx',engine='openpyxl')
         weather_latest_eval=pd.read_excel('weather_evaluation.xlsx',engine='openpyxl')

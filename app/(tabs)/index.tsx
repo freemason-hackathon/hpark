@@ -247,7 +247,7 @@ export default function HomeScreen() {
 
   const updateParkingStats =  async () => {
     console.log("updateParkingStats calling...")
-    await fetch('http://35.207.226.222:8081/api/get-parking-data', {
+    await fetch('http://34.93.157.250:8081/api/get-parking-data', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -271,7 +271,7 @@ export default function HomeScreen() {
     });
 
 
-    await fetch('http://35.207.226.222:8080/getParkingData', {
+    await fetch('http://34.93.157.250:8080/getParkingData', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -295,7 +295,7 @@ export default function HomeScreen() {
       console.error('Error fetching get-parking-data:', error);
     });
 
-    await fetch('http://35.207.226.222:8080/getParkingData', {
+    await fetch('http://34.93.157.250:8080/getParkingData', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
